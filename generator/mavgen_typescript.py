@@ -96,7 +96,12 @@ def generate_classes(dir, registry, msgs, xml):
                         extension = 'true'
                     else:
                         extension = 'false'
-                    f.write("\t\t['{}', '{}', {}],\n".format(field.name, field.type, extension))
+
+                    arraysuffix = ''
+                    if field.array_length > 1:
+                        arraysuffix = '[{}]'.format(field.array_length)
+
+                    f.write("\t\t['{}', '{}{}', {}],\n".format(field.name, field.type, arraysuffix, extension))
                     i += 1
                 f.write("\t];\n".format("', '".join(m.ordered_fieldnames)))
 
